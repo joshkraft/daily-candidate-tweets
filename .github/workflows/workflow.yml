@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-
-      - name: Setup Python
   
       - name: Run Script
         run: 
