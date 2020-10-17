@@ -42,6 +42,7 @@ def get_tweets_for_user(username):
     return tweet_json
 
 def drop_tweets_outside_date(tweet_json, date):
+    print(tweet_json)
     tweet_data = [tweet_json['data']]
     tweet_list = []
     for tweets in tweet_data:
