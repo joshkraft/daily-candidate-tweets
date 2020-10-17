@@ -20,7 +20,7 @@ def process_yaml():
     with open("config.yaml") as file:
         return yaml.safe_load(file)
 
-def create_bearer_token(data):
+def create_bearer_token():
     return INPUT_TWITTER_TOKEN
     #return data["search_tweets_api"]["bearer_token"]
 
@@ -36,8 +36,7 @@ def create_twitter_url(handle):
 
 def get_tweets_for_user(username):
     url = create_twitter_url(username)
-    data = process_yaml()
-    bearer_token = create_bearer_token(data)
+    bearer_token = create_bearer_token()
     tweet_json = twitter_auth_and_connect(bearer_token, url)
     return tweet_json
 
