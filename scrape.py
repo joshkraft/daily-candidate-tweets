@@ -27,7 +27,7 @@ def create_bearer_token(data):
 
 def create_twitter_url(handle):
     handle = handle
-    max_results = 10
+    max_results = 100
     mrf = "max_results={}".format(max_results)
     q = "query=from:{}".format(handle)
     url = "https://api.twitter.com/2/tweets/search/recent?tweet.fields=created_at&{}&{}".format(
@@ -44,12 +44,13 @@ def get_tweets_for_user(username):
     return tweet_json
 
 def extract_tweets_from_today(tweet_json):
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    yesterdays_dt = datetime.datetime.today() + datetime.timedelta(days=-1)
+    yesterdays_date = yesterdays_dt.strftime('%Y-%m-%d')
     tweet_data = [tweet_json['data']]
     tweet_list = []
     for tweets in tweet_data:
         for tweet in tweets:
-            if tweet['created_at'][0:10] == today:
+            if tweet['created_at'][0:10] == yesterdays_date:
                 tweet_list.append(tweet)
     return tweet_list
 
@@ -64,31 +65,17 @@ def fetch_and_process_tweets(username):
 
 def create_tweets_file(tweets, file_path):
     df = pd.DataFrame(tweets)
-    df.to_csv(file_path)
+    return df.to_csv(file_path)
     """if not os.path.isfile(file_path):
        df.to_csv(file_path)
     else: # else it exists so append without writing the header
         df.to_csv(file_path, mode='a', header=False)"""
-        
-
-
-
 
 def main():
-    g = Github(create_github_token())
-    repo = g.get_repo("joshkraft/daily-candidate-tweets")
     for user in USERNAMES:
-        file_path = "./data/" + user + "/" + str(datetime.date.today()) + ".csv"
+        file_path = "data/" + user + "/" + str(datetime.date.today() + datetime.timedelta(days=-1)) + ".csv"
         tweets = fetch_and_process_tweets(user)
-        #create_tweets_file(tweets, file_path)
-        repo_contents = repo.get_contents(file_path)
-        print(repo_contents == True)
-        
-        
-
-
-        
-
+        create_tweets_file(tweets, file_path)
 
 
 if __name__ == "__main__":
