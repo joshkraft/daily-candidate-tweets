@@ -5,4 +5,5 @@ PyYAML
 PyGithub
 python-dateutil
 unicodecsv
+os
 

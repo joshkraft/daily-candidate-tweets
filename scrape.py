@@ -5,6 +5,7 @@ import requests
 import json
 import yaml
 import csv
+import os
 
 def get_yesterdays_date():
     yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
