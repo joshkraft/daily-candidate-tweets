@@ -1,29 +1,28 @@
 import requests
 import pandas as pd
 import json
-import ast
 import yaml
 from github import Github
 import datetime
 import csv
-import os
 
-USERNAMES = ["realDonaldTrump", "JoeBiden"]
+def get_yesterdays_date():
+    yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
+    yesterdays_date = yesterdays_datetime.strftime('%Y-%m-%d')
+    return str(yesterdays_date)
 
 def twitter_auth_and_connect(bearer_token, url):
     headers = {"Authorization": "Bearer {}".format(bearer_token)}
     response = requests.request("GET", url, headers=headers)
     return response.json()
 
-
 def process_yaml():
     with open("config.yaml") as file:
         return yaml.safe_load(file)
 
-
 def create_bearer_token(data):
+    #return INPUT_TWITTER_TOKEN
     return data["search_tweets_api"]["bearer_token"]
-
 
 def create_twitter_url(handle):
     handle = handle
@@ -35,7 +34,6 @@ def create_twitter_url(handle):
     )
     return url
 
-
 def get_tweets_for_user(username):
     url = create_twitter_url(username)
     data = process_yaml()
@@ -43,40 +41,32 @@ def get_tweets_for_user(username):
     tweet_json = twitter_auth_and_connect(bearer_token, url)
     return tweet_json
 
-def extract_tweets_from_today(tweet_json):
-    yesterdays_dt = datetime.datetime.today() + datetime.timedelta(days=-1)
-    yesterdays_date = yesterdays_dt.strftime('%Y-%m-%d')
+def drop_tweets_outside_date(tweet_json, date):
     tweet_data = [tweet_json['data']]
     tweet_list = []
     for tweets in tweet_data:
         for tweet in tweets:
-            if tweet['created_at'][0:10] == yesterdays_date:
+            if tweet['created_at'][0:10] == date:
                 tweet_list.append(tweet)
     return tweet_list
 
-def create_github_token():
-    data = process_yaml()
-    return data["github_api"]["pat"]
-
-def fetch_and_process_tweets(username):
+def fetch_and_process_tweets(username, date):
     tweet_json = get_tweets_for_user(username)
-    tweets = extract_tweets_from_today(tweet_json)
+    tweets = drop_tweets_outside_date(tweet_json, date)
     return tweets
 
-def create_tweets_file(tweets, file_path):
+def upload_tweets(tweets, file_path):
     df = pd.DataFrame(tweets)
     return df.to_csv(file_path)
-    """if not os.path.isfile(file_path):
-       df.to_csv(file_path)
-    else: # else it exists so append without writing the header
-        df.to_csv(file_path, mode='a', header=False)"""
 
 def main():
-    for user in USERNAMES:
-        file_path = "data/" + user + "/" + str(datetime.date.today() + datetime.timedelta(days=-1)) + ".csv"
-        tweets = fetch_and_process_tweets(user)
-        create_tweets_file(tweets, file_path)
-
+    usernames = ["realDonaldTrump", "JoeBiden"]
+    date = get_yesterdays_date()
+    
+    for user in usernames:
+        file_path = "data/" + user + "/" + date + ".csv"
+        tweets = fetch_and_process_tweets(user, date)
+        upload_tweets(tweets, file_path)
 
 if __name__ == "__main__":
     main()

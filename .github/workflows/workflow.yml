@@ -1,0 +1,11 @@
+name: Scrape Data
+on: push
+jobs:
+  test-job:
+    name: Test Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show Greeting
+        uses: mscoutermarsh/ascii-art-action@master
+        with:
+          text: 'Hello, world.'
