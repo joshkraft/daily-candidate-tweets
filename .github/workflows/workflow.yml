@@ -8,8 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Script
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        with:
           TWITTER_TOKEN: ${{ secrets.TWITTER_TOKEN }}
   
         run: |
