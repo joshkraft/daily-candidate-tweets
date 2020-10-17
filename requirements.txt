@@ -1,0 +1,8 @@
+pandas @ file:///opt/concourse/worker/volumes/live/993437e5-6177-49a4-48b9-0912ecc50f00/volume/pandas_1598371475214/work
+requests==2.20.1
+json5==0.9.5
+PyYAML==5.3.1
+PyGithub==1.53
+python-dateutil==2.8.1
+unicodecsv==0.14.1
+

@@ -1,9 +1,9 @@
-import requests
+from github import Github
 import pandas as pd
+import datetime
+import requests
 import json
 import yaml
-from github import Github
-import datetime
 import csv
 
 def get_yesterdays_date():
