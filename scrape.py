@@ -21,8 +21,8 @@ def process_yaml():
         return yaml.safe_load(file)
 
 def create_bearer_token(data):
-    #return INPUT_TWITTER_TOKEN
-    return data["search_tweets_api"]["bearer_token"]
+    return INPUT_TWITTER_TOKEN
+    #return data["search_tweets_api"]["bearer_token"]
 
 def create_twitter_url(handle):
     handle = handle
