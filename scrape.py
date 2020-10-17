@@ -5,6 +5,7 @@ import requests
 import json
 import yaml
 import csv
+import os
 
 def get_yesterdays_date():
     yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
@@ -21,7 +22,7 @@ def process_yaml():
         return yaml.safe_load(file)
 
 def create_bearer_token():
-    return INPUT_TWITTER_TOKEN
+    return os.getenv('INPUT_TWITTER_TOKEN')
     #return data["search_tweets_api"]["bearer_token"]
 
 def create_twitter_url(handle):
