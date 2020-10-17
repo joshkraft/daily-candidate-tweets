@@ -1,4 +1,4 @@
-pandas @ file:///opt/concourse/worker/volumes/live/993437e5-6177-49a4-48b9-0912ecc50f00/volume/pandas_1598371475214/work
+pandas==1.1.3
 requests==2.20.1
 json5==0.9.5
 PyYAML==5.3.1
