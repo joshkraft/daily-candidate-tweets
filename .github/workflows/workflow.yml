@@ -1,27 +1,19 @@
 name: Scrape Data
 on: push
 jobs:
-  test-job:
-    name: Test Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Show Greeting
-        uses: mscoutermarsh/ascii-art-action@master
-        with:
-          text: 'Hello, world.'
   scrape-data-job:
     name: Scrape Data Job
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-  
+      - uses: actions/checkout@v2
       - name: Run Script
-        run: 
-          pip install -r requirements.txt
-          python scrape.py
         env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           TWITTER_TOKEN: ${{ secrets.TWITTER_TOKEN }}
+  
+        run: |
+          pip install -r requirements.txt
+          python train.py
 
     
