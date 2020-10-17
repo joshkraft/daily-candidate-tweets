@@ -4,9 +4,11 @@ import json
 import ast
 import yaml
 from github import Github
+import datetime
+import csv
+import os
 
-TRUMP_USERNAME = "realDonaldTrump"
-BIDEN_USERNAME = "JoeBiden"
+USERNAMES = ["realDonaldTrump", "JoeBiden"]
 
 def twitter_auth_and_connect(bearer_token, url):
     headers = {"Authorization": "Bearer {}".format(bearer_token)}
@@ -38,25 +40,54 @@ def get_tweets_for_user(username):
     url = create_twitter_url(username)
     data = process_yaml()
     bearer_token = create_bearer_token(data)
-    res_json = twitter_auth_and_connect(bearer_token, url)
-    print(res_json)
+    tweet_json = twitter_auth_and_connect(bearer_token, url)
+    return tweet_json
 
-def create_github_token(data):
+def extract_tweets_from_today(tweet_json):
+    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    tweet_data = [tweet_json['data']]
+    tweet_list = []
+    for tweets in tweet_data:
+        for tweet in tweets:
+            if tweet['created_at'][0:10] == today:
+                tweet_list.append(tweet)
+    return tweet_list
+
+def create_github_token():
+    data = process_yaml()
     return data["github_api"]["pat"]
+
+def fetch_and_process_tweets(username):
+    tweet_json = get_tweets_for_user(username)
+    tweets = extract_tweets_from_today(tweet_json)
+    return tweets
+
+def create_tweets_file(tweets, file_path):
+    df = pd.DataFrame(tweets)
+    df.to_csv(file_path)
+    """if not os.path.isfile(file_path):
+       df.to_csv(file_path)
+    else: # else it exists so append without writing the header
+        df.to_csv(file_path, mode='a', header=False)"""
+        
 
 
 
 
 def main():
-    #get_tweets_for_user(TRUMP_USERNAME)
-    print('Main Ran')
-    data = process_yaml()
-    github_token = create_github_token(data)
-    g = Github(github_token)
-
+    g = Github(create_github_token())
     repo = g.get_repo("joshkraft/daily-candidate-tweets")
-    contents = repo.get_contents("README.md")
-    print(contents)
+    for user in USERNAMES:
+        file_path = "./data/" + user + "/" + str(datetime.date.today()) + ".csv"
+        tweets = fetch_and_process_tweets(user)
+        #create_tweets_file(tweets, file_path)
+        repo_contents = repo.get_contents(file_path)
+        print(repo_contents == True)
+        
+        
+
+
+        
 
 
 
