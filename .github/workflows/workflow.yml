@@ -8,11 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Script
-        with:
-          TWITTER_TOKEN: ${{ secrets.TWITTER_TOKEN }}
   
         run: |
+          # Your ML workflow goes here
           pip install -r requirements.txt
-          python scrape.py
+          python train.py
+        with:
+          TWITTER_TOKEN: ${{ secrets.TWITTER_TOKEN }}
 
     
