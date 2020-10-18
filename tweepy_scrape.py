@@ -16,7 +16,7 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 
 # ACTIONS METHOD
         
-secret_file = open('$HOME/secrets/secrets.json')
+secret_file = open('secrets/secrets.json')
 secret_data = json.load(secret_file)
 
 CONSUMER_KEY = secret_data["API_KEY"] # does this need quotes?
