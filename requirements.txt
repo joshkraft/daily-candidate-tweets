@@ -1,8 +1,1 @@
-pandas
-requests
-json5
-PyYAML
-PyGithub
-python-dateutil
-unicodecsv
-
+tweepy
