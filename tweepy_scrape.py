@@ -16,13 +16,14 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 
 # ACTIONS METHOD
 
-for root, dirs, files in os.walk("."):
-    for filename in files:
-        print(filename)
+for root, dirs, files in os.walk("/mydir"):
+    for file in files:
+        if file.endswith(".json"):
+             print(os.path.join(root, file))
         
-secret_file = open('$HOME/secrets/secrets.json')
+"""secret_file = open('$HOME/secrets/secrets.json')
 secret_data = json.load(secret_file)
-print('Found secrets.')
+print('Found secrets.')"""
 
 """CONSUMER_KEY = os.getenv('INPUT_CONSUMER_KEY') # does this need quotes?
 CONSUMER_SECRET = os.getenv('INPUT_CONSUMER_SECRET')
