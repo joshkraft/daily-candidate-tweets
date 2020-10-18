@@ -1,1 +1,2 @@
-tweepy
+tweepy==3.9.0
+json

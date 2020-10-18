@@ -3,17 +3,29 @@ on: push
 jobs:
   scrape-data-job:
     name: Scrape Data
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: Run Script
-  
+
+      - uses: schdck/create-env-json@v1
+      id: create-env
+      with:
+        CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+        CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+
+      - uses: action/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install Dependencies
         run: |
-          # Your ML workflow goes here
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+        run: |
           python tweepy_scrape.py
-        env:
+        with:
           CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
           CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}

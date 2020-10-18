@@ -1,4 +1,5 @@
 import tweepy
+import json
 import os
 
 """
@@ -13,6 +14,12 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 """
 
 # ACTIONS METHOD
+
+import secrets.json
+
+secret_file = open('secrets.json')
+secret_data = json.load(secret_file)
+print(secret_data)
 
 CONSUMER_KEY = os.getenv('INPUT_CONSUMER_KEY') # does this need quotes?
 CONSUMER_SECRET = os.getenv('INPUT_CONSUMER_SECRET')
