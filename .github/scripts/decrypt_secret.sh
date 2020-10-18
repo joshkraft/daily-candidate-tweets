@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # Decrypt the file
 mkdir $HOME/secrets
 # --batch to prevent interactive command
