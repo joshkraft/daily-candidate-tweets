@@ -20,7 +20,7 @@ for root, dirs, files in os.walk("."):
     for filename in files:
         print(filename)
         
-secret_file = open('secrets/secrets.json')
+secret_file = open('$HOME/secrets/secrets.json')
 secret_data = json.load(secret_file)
 print('Found secrets.')
 
