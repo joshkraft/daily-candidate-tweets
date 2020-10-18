@@ -16,6 +16,12 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 
 # ACTIONS METHOD
 print(os.listdir())
+
+print('opening .github file')
+
+print(glob.glob("/.githib"))
+
+
         
 """secret_file = open('secrets/secrets.json')
 secret_data = json.load(secret_file)
