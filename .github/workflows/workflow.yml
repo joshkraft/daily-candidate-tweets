@@ -7,6 +7,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: action/setup-python@v2
+        with:
+          python-version: 3.7
+
       - uses: schdck/create-env-json@v1
         id: create-env
         with:
@@ -14,10 +18,7 @@ jobs:
           CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-
-      - uses: action/setup-python@v2
-        with:
-          python-version: 3.7
+          
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
