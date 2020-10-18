@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: '3.6' # Version range or exact version of a Python version to use, using SemVer's version range syntax
 
-      - uses: schdck/create-env-json@v1
+      - uses: schdck/create-env-json@v2
         id: create-env
         with:
           CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
