@@ -15,8 +15,9 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 """
 
 # ACTIONS METHOD
+print(os.listdir())
         
-secret_file = open('secrets/secrets.json')
+"""secret_file = open('secrets/secrets.json')
 secret_data = json.load(secret_file)
 
 CONSUMER_KEY = secret_data["API_KEY"] # does this need quotes?
@@ -26,7 +27,7 @@ ACCESS_TOKEN_SECRET = secret_data["ACCESS_SECRET"]
 
 secret_file.close()
 print('Found secrets.')
-
+"""
 """
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
