@@ -19,7 +19,7 @@ print(os.listdir())
 
 print('opening .github file')
 
-print(glob.glob("/.githib"))
+print(glob.glob("/.github"))
 
 
         
