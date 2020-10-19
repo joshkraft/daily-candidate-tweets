@@ -18,7 +18,7 @@ ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
 print(os.listdir())
 
 print('opening .github file')
-print(glob.glob("/secrets")
+print(glob.glob("/secrets"))
 print(glob.glob("/secrets/secrets.json"))
 
 from pathlib import Path
