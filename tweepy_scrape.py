@@ -29,6 +29,8 @@ print(home)
 from os.path import isfile, join
 from os import listdir
 
+my_path = home + '/secrets/secrets.json'
+
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 print(onlyfiles)
 
