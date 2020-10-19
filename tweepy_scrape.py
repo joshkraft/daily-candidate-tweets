@@ -31,8 +31,8 @@ from os import listdir
 
 my_path = home + '/secrets/secrets.json'
 
-onlyfiles = [f for f in listdir(my_path) if isfile(join(my_path, f))]
-print(onlyfiles)
+#onlyfiles = [f for f in listdir(my_path) if isfile(join(my_path, f))]
+#print(onlyfiles)
 
 
 
