@@ -25,8 +25,7 @@ from pathlib import Path
 home = str(Path.home())
 print(home)
 
-mypath = home + "/secrets"
-
+"""
 from os.path import isfile, join
 from os import listdir
 
@@ -36,12 +35,13 @@ print(onlyfiles)
 
 
 
+"""
 
 
 
-
+mypath = home + "/secrets/secrets.json"
         
-"""secret_file = open('secrets/secrets.json')
+secret_file = open(my_path)
 secret_data = json.load(secret_file)
 
 CONSUMER_KEY = secret_data["API_KEY"] # does this need quotes?
