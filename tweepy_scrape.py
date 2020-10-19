@@ -28,6 +28,8 @@ print(home)
 mypath = home + "/secrets"
 
 from os.path import isfile, join
+from os import listdir
+
 onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 print(onlyfiles)
 
