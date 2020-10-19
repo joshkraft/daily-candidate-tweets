@@ -19,7 +19,7 @@ def authenticate_with_secrets(secret_filepath):
 
 def get_tweets_from_user(api, user):
     tweets = api.user_timeline(user, 
-                               count = 10,
+                               count = 200,
                                tweet_mode = 'extended')
     return tweets
 
