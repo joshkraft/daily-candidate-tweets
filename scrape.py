@@ -6,17 +6,15 @@ import glob
 def authenticate_with_secrets(secret_filepath):
     secret_file = open(secret_filepath)
     secret_data = json.load(secret_file)
-
     CONSUMER_KEY = secret_data["API_KEY"]
     CONSUMER_SECRET = secret_data["API_SECRET"]
     ACCESS_TOKEN = secret_data["ACCESS_TOKEN"]
     ACCESS_TOKEN_SECRET = secret_data["ACCESS_SECRET"]
-
     secret_file.close()
     print('Found secrets.')
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    
+    api = tweepy.API(auth)
     return api
 
 def get_tweets_from_user(user):
