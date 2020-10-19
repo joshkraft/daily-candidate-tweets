@@ -2,48 +2,8 @@ import tweepy
 import json
 import os
 import glob
-
-"""
-
-# LOCAL METHOD
-import secrets
-
-CONSUMER_KEY = secrets.CONSUMER_KEY
-CONSUMER_SECRET = secrets.CONSUMER_SECRET
-ACCESS_TOKEN = secrets.ACCESS_TOKEN
-ACCESS_TOKEN_SECRET = secrets.ACCESS_TOKEN_SECRET
-"""
-
-# ACTIONS METHOD
-print(os.listdir())
-
-print('opening .github file')
-print(glob.glob("/secrets"))
-print(glob.glob("/secrets/secrets.json"))
-
-from pathlib import Path
-home = str(Path.home())
-print(home)
-
-
-from os.path import isfile, join
-from os import listdir
-
-my_path = home + '/secrets/secrets.json'
-
-#onlyfiles = [f for f in listdir(my_path) if isfile(join(my_path, f))]
-#print(onlyfiles)
-
-
-
-
-
-
-
-
-mypath = home + "/secrets/secrets.json"
         
-secret_file = open(my_path)
+secret_file = open("home/runner/secrets/json")
 secret_data = json.load(secret_file)
 
 CONSUMER_KEY = secret_data["API_KEY"] # does this need quotes?
