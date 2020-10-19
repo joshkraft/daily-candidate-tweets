@@ -19,7 +19,7 @@ def authenticate_with_secrets(secret_filepath):
 
 def get_tweets_from_user(api, user):
     tweets = api.user_timeline(user, 
-                               count = 200,
+                               count = 50,
                                tweet_mode = 'extended')
     return tweets
 
@@ -33,7 +33,8 @@ def main():
     for user in usernames:
         tweets = get_tweets_from_user(api, user)
         for tweet in tweets:
-            print(tweet.created_at, tweet.full_text)
+            if (not tweet.retweeted) and ('RT @' not in tweet.text):
+                print(tweet.created_at, tweet.full_text)
 
     """
     for user in usernames:
