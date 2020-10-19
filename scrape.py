@@ -38,9 +38,9 @@ def main():
         file_path = "data/" + user + "/" + date + ".csv"
         tweets = get_tweets_from_user(api, user)
         for tweet in tweets:
-            if (not tweet.retweeted) and ('RT @' not in tweet.text):
+            if (not tweet.retweeted) and ('RT @' not in tweet.full_text):
                 print(tweet.created_at, tweet.full_text)
-                
+
         upload_tweets(tweets, file_path)
 
     """
