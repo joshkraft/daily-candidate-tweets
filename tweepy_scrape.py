@@ -53,7 +53,7 @@ ACCESS_TOKEN_SECRET = secret_data["ACCESS_SECRET"]
 
 secret_file.close()
 print('Found secrets.')
-"""
+
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
@@ -63,4 +63,3 @@ trump_tweets = api.user_timeline('realDonaldTrump',
                                  tweet_mode = 'extended')
 for tweet in trump_tweets:
     print(tweet.created_at, tweet.full_text)
-"""
