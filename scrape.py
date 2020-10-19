@@ -16,7 +16,8 @@ def authenticate_with_secrets(secret_filepath):
     print('Found secrets.')
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    return auth
+    
+    return api
 
 def get_tweets_from_user(user):
     tweets = api.user_timeline(user, 
@@ -26,8 +27,8 @@ def get_tweets_from_user(user):
 
 
 def main():
-    auth = authenticate_with_secrets('/home/runner/secrets/secrets.json')
-    api = tweepy.API(auth)
+    api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
+    
 
     usernames = ["realDonaldTrump", "JoeBiden"]
 
