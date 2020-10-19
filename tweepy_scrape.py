@@ -21,6 +21,10 @@ print('opening .github file')
 
 print(glob.glob("home/runner/secrets/secrets.json"))
 
+from pathlib import Path
+home = str(Path.home())
+print(home)
+
 
 
 
