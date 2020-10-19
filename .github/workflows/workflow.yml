@@ -45,13 +45,3 @@ jobs:
           echo "${{ steps.abc.outputs.modified }}"
           echo "Added+Modified:"
           echo "${{ steps.abc.outputs.added_modified }}"
-
-    
-"""
-
-Just added debug step to workflow. Why is a secrets file not being created? or am I just not referencing it right in pyth?
-back to os.listdir? check abck to the other examples. we are creating the file, but not sure how to reference it in python?
-
-
-
-"""
