@@ -19,9 +19,13 @@ def authenticate_with_secrets(secret_filepath):
 
 def get_tweets_from_user(api, user):
     tweets = api.user_timeline(user, 
-                               count = 50,
+                               count = 10,
                                tweet_mode = 'extended')
     return tweets
+
+def upload_tweets(tweets, file_path):
+    df = pd.DataFrame(tweets)
+    return df.to_csv(file_path)
 
 
 def main():
@@ -31,10 +35,13 @@ def main():
     usernames = ["realDonaldTrump", "JoeBiden"]
 
     for user in usernames:
+        file_path = "data/" + user + "/" + date + ".csv"
         tweets = get_tweets_from_user(api, user)
         for tweet in tweets:
             if (not tweet.retweeted) and ('RT @' not in tweet.text):
                 print(tweet.created_at, tweet.full_text)
+                
+        upload_tweets(tweets, file_path)
 
     """
     for user in usernames:
