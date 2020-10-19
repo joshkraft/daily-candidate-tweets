@@ -17,7 +17,7 @@ def authenticate_with_secrets(secret_filepath):
     api = tweepy.API(auth)
     return api
 
-def get_tweets_from_user(user):
+def get_tweets_from_user(api, user):
     tweets = api.user_timeline(user, 
                                count = 10,
                                tweet_mode = 'extended')
@@ -31,7 +31,7 @@ def main():
     usernames = ["realDonaldTrump", "JoeBiden"]
 
     for user in usernames:
-        tweets = get_tweets_from_user(user)
+        tweets = get_tweets_from_user(api, user)
         for tweet in tweets:
             print(tweet.created_at, tweet.full_text)
 
