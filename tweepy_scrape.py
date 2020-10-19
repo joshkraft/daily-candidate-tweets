@@ -3,7 +3,7 @@ import json
 import os
 import glob
         
-secret_file = open("/home/runner/secrets/json")
+secret_file = open("/home/runner/secrets/secrets.json")
 secret_data = json.load(secret_file)
 
 CONSUMER_KEY = secret_data["API_KEY"] # does this need quotes?
