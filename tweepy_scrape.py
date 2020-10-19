@@ -25,6 +25,12 @@ from pathlib import Path
 home = str(Path.home())
 print(home)
 
+mypath = home + "/secrets"
+
+from os.path import isfile, join
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+print(onlyfiles)
+
 
 
 
