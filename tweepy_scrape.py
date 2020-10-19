@@ -19,7 +19,11 @@ print(os.listdir())
 
 print('opening .github file')
 
-print(glob.glob("./.github/scripts"))
+print(glob.glob("home/runner/secrets/secrets.json"))
+
+
+
+
 
 
 
