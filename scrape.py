@@ -1,7 +1,13 @@
+import datetime
 import tweepy
 import json
 import os
 import glob
+
+def get_yesterdays_date():
+    yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
+    yesterdays_date = yesterdays_datetime.strftime('%Y-%m-%d')
+    return str(yesterdays_date)
 
 def authenticate_with_secrets(secret_filepath):
     secret_file = open(secret_filepath)
@@ -30,8 +36,7 @@ def upload_tweets(tweets, file_path):
 
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
-    
-
+    date = get_yesterdays_date()
     usernames = ["realDonaldTrump", "JoeBiden"]
 
     for user in usernames:
