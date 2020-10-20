@@ -26,7 +26,7 @@ def authenticate_with_secrets(secret_filepath):
 
 def get_tweets_from_user(api, user):
     tweets = api.user_timeline(user, 
-                               count = 10,
+                               count = 200,
                                tweet_mode = 'extended')
     return tweets
 
@@ -42,12 +42,14 @@ def main():
 
     for user in usernames:
         file_path = "data/" + user + "/" + date + ".csv"
-        tweets = get_tweets_from_user(api, user)
-        for tweet in tweets:
+        all_tweets = get_tweets_from_user(api, user)
+        original_tweets = []
+        for tweet in all_tweets:
             if (not tweet.retweeted) and ('RT @' not in tweet.full_text):
-                print(tweet.created_at, tweet.full_text)
+                original_tweets.append(tweet)
+        upload_tweets(original_tweets, file_path)
 
-        upload_tweets(tweets, file_path)
+        
 
     """
     for user in usernames:
