@@ -53,7 +53,7 @@ def main():
         json_tweets = [t._json for t in raw_tweets]
         tweet_df = pd.io.json.json_normalize(json_tweets)
         
-        tweet_df = tweet_df[tweet_df['retweeted'] == false]
+        tweet_df = tweet_df[tweet_df['retweeted'] == 0]
 
         upload_tweets(tweet_df, file_path)
 
