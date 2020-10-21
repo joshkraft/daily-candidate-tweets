@@ -49,13 +49,15 @@ def main():
 
     for user in usernames:
         file_path = "data/" + user + "/" + date + ".csv"
-        raw_tweets = get_tweets_from_user(api, user)
-        json_tweets = [t._json for t in raw_tweets]
+        for tweet in get_tweets_from_user(api, user):
+            print(tweet)
+            print(tweet['retweeted'])
+        """json_tweets = [t._json for t in raw_tweets]
         tweet_df = pd.io.json.json_normalize(json_tweets)
         
         tweet_df = tweet_df[tweet_df['retweeted'] == 0]
 
-        upload_tweets(tweet_df, file_path)
+        upload_tweets(tweet_df, file_path)"""
 
         
 
