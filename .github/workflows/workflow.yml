@@ -1,22 +1,25 @@
-name: Scrape Data
+name: Fetch Yesterdays Tweets
 on: push
 jobs:
   scrape-data-job:
-    name: Scrape Data
+    name: Featch Yesterdays Tweets
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout Repository.
         uses: actions/checkout@v2
+
 
       - name: Setup Python 3.7.
         uses: actions/setup-python@v2
         with:
           python-version: '3.7' 
 
+
       - name: Decrypt Secrets file.
         run: ./.github/scripts/decrypt_secret.sh
         env:
           SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
+
 
       - name: Install dependencies and run script.
         run: |
@@ -28,6 +31,7 @@ jobs:
           CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+
 
       - name: Commit data to repo.
         run: |
