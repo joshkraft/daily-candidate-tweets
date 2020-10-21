@@ -38,7 +38,7 @@ def fromYesterday(tweet, yesterdays_date):
     return tweet.created_at[0:10] == yesterdays_date
 
 def notRetweet(tweet):
-    return (not tweet.retweeted == False) and ('RT @' not in tweet.full_text)
+    return (tweet.retweeted == False) and ('RT @' not in tweet.full_text)
 
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
