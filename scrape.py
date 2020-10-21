@@ -34,6 +34,13 @@ def upload_tweets(tweets, file_path):
     df = pd.DataFrame(tweets)
     return df.to_csv(file_path)
 
+def process_tweets(all_tweets):
+    processed_tweets = []
+    for tweet in all_tweets:
+        if (not tweet.retweeted) and ('RT @' not in tweet.full_text):
+            processed_tweets.append(tweet)
+
+    return processed_tweets
 
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
@@ -42,12 +49,13 @@ def main():
 
     for user in usernames:
         file_path = "data/" + user + "/" + date + ".csv"
-        all_tweets = get_tweets_from_user(api, user)
-        original_tweets = []
-        for tweet in all_tweets:
-            if (not tweet.retweeted) and ('RT @' not in tweet.full_text):
-                original_tweets.append(tweet)
-        upload_tweets(original_tweets, file_path)
+        raw_tweets = get_tweets_from_user(api, user)
+        json_tweets = [t._json for t in raw_tweets]
+        tweet_df = pd.io.json.json_normalize(json_tweets)
+        
+        tweet_df = tweet_df[tweet_df['retweeted'] == false]
+
+        upload_tweets(tweet_df, file_path)
 
         
 
