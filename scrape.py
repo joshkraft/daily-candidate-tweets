@@ -35,7 +35,7 @@ def upload_tweets(tweets, file_path):
     return df.to_csv(file_path)
 
 def fromYesterday(tweet, yesterdays_date):
-    return tweet.created_at[0:10] == yesterdays_date
+    return tweet.created_at.strftime('%Y-%m-%d') == yesterdays_date
 
 def notRetweet(tweet):
     return (tweet.retweeted == False) and ('RT @' not in tweet.full_text)
@@ -52,10 +52,10 @@ def main():
             tweet_details = {}
             if notRetweet(tweet) and fromYesterday(tweet, yesterdays_date):
                 tweet_details['username'] = tweet.user.screen_name
-                tweet_details['tweet'] = tweet.full_text
+                tweet_details['tweet_text'] = tweet.full_text
                 tweet_details['retweets'] = tweet.retweet_count
                 tweet_details['location'] = tweet.user.location
-                tweet_details['created'] = tweet.created_at.strftime("%d-%b-%Y")
+                tweet_details['created_at'] = tweet.created_at
                 processed_tweets.append(tweet_details)
 
         upload_tweets(processed_tweets, file_path)
