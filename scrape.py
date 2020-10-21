@@ -34,38 +34,31 @@ def upload_tweets(tweets, file_path):
     df = pd.DataFrame(tweets)
     return df.to_csv(file_path)
 
-def process_tweets(all_tweets):
-    processed_tweets = []
-    for tweet in all_tweets:
-        if (not tweet.retweeted) and ('RT @' not in tweet.full_text):
-            processed_tweets.append(tweet)
+def fromYesterday(tweet, yesterdays_date):
+    return tweet.created_at[0:10] == yesterdays_date
 
-    return processed_tweets
+def notRetweet(tweet):
+    return (not tweet.retweeted == False) and ('RT @' not in tweet.full_text)
 
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
-    date = get_yesterdays_date()
+    yesterdays_date = get_yesterdays_date()
     usernames = ["realDonaldTrump", "JoeBiden"]
 
     for user in usernames:
-        file_path = "data/" + user + "/" + date + ".csv"
+        file_path = "data/" + user + "/" + yesterdays_date + ".csv"
+        processed_tweets = []
         for tweet in get_tweets_from_user(api, user):
-            print(tweet)
-            print(tweet['retweeted'])
-        """json_tweets = [t._json for t in raw_tweets]
-        tweet_df = pd.io.json.json_normalize(json_tweets)
-        
-        tweet_df = tweet_df[tweet_df['retweeted'] == 0]
+            tweet_details = {}
+            if notRetweet(tweet) and fromYesterday(tweet, yesterdays_date):
+                tweet_details['username'] = tweet.user.screen_name
+                tweet_details['tweet'] = tweet.full_text
+                tweet_details['retweets'] = tweet.retweet_count
+                tweet_details['location'] = tweet.user.location
+                tweet_details['created'] = tweet.created_at.strftime("%d-%b-%Y")
+                processed_tweets.append(tweet_details)
 
-        upload_tweets(tweet_df, file_path)"""
-
-        
-
-    """
-    for user in usernames:
-        file_path = "data/" + user + "/" + date + ".csv"
-        tweets = fetch_and_process_tweets(user, date)
-        upload_tweets(tweets, file_path)"""
+        upload_tweets(processed_tweets, file_path)
 
 if __name__ == "__main__":
     main()
