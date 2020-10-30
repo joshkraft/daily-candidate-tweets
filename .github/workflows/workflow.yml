@@ -5,7 +5,7 @@ on:
     
 jobs:
   scrape-data-job:
-    name: Featch Yesterdays Tweets
+    name: Fetch Yesterdays Tweets
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout Repository.
