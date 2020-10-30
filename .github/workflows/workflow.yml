@@ -1,8 +1,7 @@
 name: Fetch Yesterdays Tweets
 on:
-  push
-  #schedule:
-   # - cron: '0 9 * * *'
+  schedule:
+   - cron: '0 9 * * *'
     
 jobs:
   scrape-data-job:
