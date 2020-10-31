@@ -5,7 +5,6 @@ import json
 import os
 import glob
 
-from most_recent_tweet_id import most_recent_tweet_id
 
 last_retrieved_tweet_ids = {}
 
@@ -63,6 +62,9 @@ def main():
     yesterdays_date = get_yesterdays_date()
     usernames = ["realDonaldTrump", "JoeBiden"]
 
+    with open("most_recent_tweet_id.json", "r") as file:
+        most_recent_tweet_id = json.load(file)
+
     for user in usernames:
         file_path = "data/" + user + "/" + yesterdays_date + ".csv"
         processed_tweets = []
@@ -77,6 +79,9 @@ def main():
                 processed_tweets.append(tweet_details)
 
         upload_tweets(processed_tweets, file_path)
+
+    with open("most_recent_tweet_id.json", "w") as file:
+        json.dump(most_recent_tweet_id, file)
 
 if __name__ == "__main__":
     main()
