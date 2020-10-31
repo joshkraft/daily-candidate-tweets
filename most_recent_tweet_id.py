@@ -1,1 +1,0 @@
-most_recent_tweet_id = {}

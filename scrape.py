@@ -6,13 +6,6 @@ import os
 import glob
 
 
-last_retrieved_tweet_ids = {}
-
-def get_yesterdays_date():
-    yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
-    yesterdays_date = yesterdays_datetime.strftime('%Y-%m-%d')
-    return str(yesterdays_date)
-
 def authenticate_with_secrets(secret_filepath):
 
     secret_file = open(secret_filepath)
@@ -30,6 +23,22 @@ def authenticate_with_secrets(secret_filepath):
     return api
 
 
+def get_yesterdays_date():
+    yesterdays_datetime = datetime.datetime.today() + datetime.timedelta(days=-1)
+    yesterdays_date = yesterdays_datetime.strftime('%Y-%m-%d')
+    return str(yesterdays_date)
+
+
+def get_last_tweet_ids():
+    with open("most_recent_tweet_id.json", "r") as file:
+        return json.load(file)
+
+
+def write_last_tweet_ids(most_recent_tweet_id_dict):
+    with open("most_recent_tweet_id.json", "w") as file:
+        json.dump(most_recent_tweet_id_dict, file)
+
+
 def get_tweets_from_user(api, user, most_recent_tweet_id_dict):
     if user in most_recent_tweet_id_dict:
         tweets = api.user_timeline(user, 
@@ -45,23 +54,19 @@ def get_tweets_from_user(api, user, most_recent_tweet_id_dict):
     most_recent_tweet_id_dict[user] =  str(tweets[-1].id)
     return tweets
 
+
 def upload_tweets(tweets, file_path):
     df = pd.DataFrame(tweets)
     return df.to_csv(file_path)
 
+
 def fromYesterday(tweet, yesterdays_date):
     return tweet.created_at.strftime('%Y-%m-%d') == yesterdays_date
+
 
 def notRetweet(tweet):
     return (tweet.retweeted == False) and ('RT @' not in tweet.full_text)
 
-def get_last_tweet_ids():
-    with open("most_recent_tweet_id.json", "r") as file:
-        return json.load(file)
-
-def write_last_tweet_ids(most_recent_tweet_id_dict):
-    with open("most_recent_tweet_id.json", "w") as file:
-        json.dump(most_recent_tweet_id_dict, file)
 
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
