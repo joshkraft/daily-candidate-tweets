@@ -29,8 +29,8 @@ def authenticate_with_secrets(secret_filepath):
     return api
 
 def get_tweets_from_user(api, user):
-    last_retrieved_tweet_id = last_retrieved_tweet_id.last_retrieved_tweet_id[user]
-    if last_retrieved_tweet_id == '':
+    last_tweet_id = last_retrieved_tweet_id.last_retrieved_tweet_id[user]
+    if last_tweet_id == '':
         tweets = api.user_timeline(user, 
                                    count = 200,
                                    include_rts = False,
@@ -38,7 +38,7 @@ def get_tweets_from_user(api, user):
     else:
         tweets = api.user_timeline(user, 
                                    count = 200,
-                                   max_id = last_retrieved_tweet_id - 1,
+                                   max_id = last_tweet_id - 1,
                                    include_rts = False,
                                    tweet_mode = 'extended')
         
