@@ -57,9 +57,9 @@ def notRetweet(tweet):
 
 def get_last_tweet_ids():
     with open("most_recent_tweet_id.json", "r") as file:
-        most_recent_tweet_id_dict = json.load(file)
+        return json.load(file)
 
-def write_last_tweet_ids():
+def write_last_tweet_ids(most_recent_tweet_id_dict):
     with open("most_recent_tweet_id.json", "w") as file:
         json.dump(most_recent_tweet_id_dict, file)
 
@@ -68,7 +68,7 @@ def main():
     yesterdays_date = get_yesterdays_date()
     usernames = ["realDonaldTrump", "JoeBiden"]
 
-    get_last_tweet_ids()
+    most_recent_tweet_id_dict = get_last_tweet_ids()
 
     for user in usernames:
         file_path = "data/" + user + "/" + yesterdays_date + ".csv"
@@ -85,7 +85,7 @@ def main():
 
         upload_tweets(processed_tweets, file_path)
 
-    write_last_tweet_ids()
+    write_last_tweet_ids(most_recent_tweet_id_dict)
 
 if __name__ == "__main__":
     main()
