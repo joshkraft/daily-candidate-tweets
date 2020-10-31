@@ -29,8 +29,6 @@ def authenticate_with_secrets(secret_filepath):
     
     return api
 
-def update_last_tweet_id(user, new_id):
-    most_recent_tweet_id_dict.update({user: new_id})
 
 def get_tweets_from_user(api, user, most_recent_tweet_id_dict):
     if user in most_recent_tweet_id_dict:
@@ -57,13 +55,20 @@ def fromYesterday(tweet, yesterdays_date):
 def notRetweet(tweet):
     return (tweet.retweeted == False) and ('RT @' not in tweet.full_text)
 
+def get_last_tweet_ids():
+    with open("most_recent_tweet_id.json", "r") as file:
+        most_recent_tweet_id_dict = json.load(file)
+
+def write_last_tweet_ids():
+    with open("most_recent_tweet_id.json", "w") as file:
+        json.dump(most_recent_tweet_id_dict, file)
+
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
     yesterdays_date = get_yesterdays_date()
     usernames = ["realDonaldTrump", "JoeBiden"]
 
-    with open("most_recent_tweet_id.json", "r") as file:
-        most_recent_tweet_id_dict = json.load(file)
+    get_last_tweet_ids()
 
     for user in usernames:
         file_path = "data/" + user + "/" + yesterdays_date + ".csv"
@@ -80,8 +85,7 @@ def main():
 
         upload_tweets(processed_tweets, file_path)
 
-    with open("most_recent_tweet_id.json", "w") as file:
-        json.dump(most_recent_tweet_id_dict, file)
+    write_last_tweet_ids()
 
 if __name__ == "__main__":
     main()
