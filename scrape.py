@@ -5,6 +5,8 @@ import json
 import os
 import glob
 
+from most_recent_tweet_id import most_recent_tweet_id
+
 last_retrieved_tweet_ids = {}
 
 def get_yesterdays_date():
@@ -29,13 +31,13 @@ def authenticate_with_secrets(secret_filepath):
     return api
 
 def update_last_tweet_id(user, new_id):
-    last_retrieved_tweet_ids.update({user: new_id})
+    most_recent_tweet_id.update({user: new_id})
 
 def get_tweets_from_user(api, user):
-    if user in last_retrieved_tweet_ids:
+    if user in most_recent_tweet_id:
         tweets = api.user_timeline(user, 
                                    count = 200,
-                                   max_id = last_retrieved_tweet_ids[user] - 1,
+                                   max_id = most_recent_tweet_id[user] - 1,
                                    include_rts = False,
                                    tweet_mode = 'extended')
     else:
