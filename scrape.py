@@ -43,6 +43,7 @@ def get_tweets_from_user(api, user):
                                    tweet_mode = 'extended')
         
     last_retrieved_tweet_id.last_retrieved_tweet_id[user] = tweets[-1].id
+    print(last_retrieved_tweet_id.last_retrieved_tweet_id[user])
     return tweets
 
 def upload_tweets(tweets, file_path):
