@@ -40,7 +40,7 @@ def get_tweets_from_user(api, user):
                                    count = 200,
                                    include_rts = False,
                                    tweet_mode = 'extended')
-    updated_id = {user, str(tweets[-1].id)}
+    updated_id = {user, tweets[-1].id}
     last_retrieved_tweet_ids.update(updated_id)
     return tweets
 
