@@ -1,7 +1,6 @@
 name: Fetch Yesterdays Tweets
 on:
   push
-  
   #schedule:
   #  - cron: '0 5 * * *'
     
@@ -42,6 +41,7 @@ jobs:
         run: |
           git config --global user.email "joshkraft757@gmail.com"
           git config --global user.name "Josh Kraft"
+          git status
           git add .
           git commit -m "Commit daily tweet data."
           git push
