@@ -32,7 +32,7 @@ def authenticate_with_secrets(secret_filepath):
 def update_last_tweet_id(user, new_id):
     most_recent_tweet_id_dict.update({user: new_id})
 
-def get_tweets_from_user(api, user):
+def get_tweets_from_user(api, user, most_recent_tweet_id_dict):
     if user in most_recent_tweet_id_dict:
         tweets = api.user_timeline(user, 
                                    count = 200,
@@ -44,7 +44,7 @@ def get_tweets_from_user(api, user):
                                    count = 200,
                                    include_rts = False,
                                    tweet_mode = 'extended')
-    update_last_tweet_id(user, str(tweets[-1].id))
+    most_recent_tweet_id_dict[user] =  str(tweets[-1].id)
     return tweets
 
 def upload_tweets(tweets, file_path):
@@ -68,7 +68,7 @@ def main():
     for user in usernames:
         file_path = "data/" + user + "/" + yesterdays_date + ".csv"
         processed_tweets = []
-        for tweet in get_tweets_from_user(api, user):
+        for tweet in get_tweets_from_user(api, user, most_recent_tweet_id_dict):
             tweet_details = {}
             if notRetweet(tweet) and fromYesterday(tweet, yesterdays_date):
                 tweet_details['username'] = tweet.user.screen_name
