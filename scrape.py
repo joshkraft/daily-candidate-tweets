@@ -30,13 +30,13 @@ def authenticate_with_secrets(secret_filepath):
     return api
 
 def update_last_tweet_id(user, new_id):
-    most_recent_tweet_id.update({user: new_id})
+    most_recent_tweet_id_dict.update({user: new_id})
 
 def get_tweets_from_user(api, user):
-    if user in most_recent_tweet_id:
+    if user in most_recent_tweet_id_dict:
         tweets = api.user_timeline(user, 
                                    count = 200,
-                                   max_id = most_recent_tweet_id[user] - 1,
+                                   max_id = most_recent_tweet_id_dict[user] - 1,
                                    include_rts = False,
                                    tweet_mode = 'extended')
     else:
@@ -63,7 +63,7 @@ def main():
     usernames = ["realDonaldTrump", "JoeBiden"]
 
     with open("most_recent_tweet_id.json", "r") as file:
-        most_recent_tweet_id = json.load(file)
+        most_recent_tweet_id_dict = json.load(file)
 
     for user in usernames:
         file_path = "data/" + user + "/" + yesterdays_date + ".csv"
@@ -81,7 +81,7 @@ def main():
         upload_tweets(processed_tweets, file_path)
 
     with open("most_recent_tweet_id.json", "w") as file:
-        json.dump(most_recent_tweet_id, file)
+        json.dump(most_recent_tweet_id_dict, file)
 
 if __name__ == "__main__":
     main()
