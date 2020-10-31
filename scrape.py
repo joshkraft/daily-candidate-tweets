@@ -34,7 +34,7 @@ def get_tweets_from_user(api, user, most_recent_tweet_id_dict):
     if user in most_recent_tweet_id_dict:
         tweets = api.user_timeline(user, 
                                    count = 200,
-                                   max_id = most_recent_tweet_id_dict[user] - 1,
+                                   max_id = int(most_recent_tweet_id_dict[user]) - 1,
                                    include_rts = False,
                                    tweet_mode = 'extended')
     else:
