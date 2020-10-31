@@ -28,6 +28,9 @@ def authenticate_with_secrets(secret_filepath):
     
     return api
 
+def update_last_tweet_id(user, new_id):
+    last_retrieved_tweet_ids.update({user: new_id})
+
 def get_tweets_from_user(api, user):
     if user in last_retrieved_tweet_ids:
         tweets = api.user_timeline(user, 
@@ -40,8 +43,7 @@ def get_tweets_from_user(api, user):
                                    count = 200,
                                    include_rts = False,
                                    tweet_mode = 'extended')
-    updated_id = {user: str(tweets[-1].id)}
-    last_retrieved_tweet_ids.update(updated_id)
+    update_last_tweet_id(user, str(tweets[-1].id))
     return tweets
 
 def upload_tweets(tweets, file_path):
