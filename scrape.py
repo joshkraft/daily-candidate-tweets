@@ -55,7 +55,10 @@ def get_tweets_from_user(api, user, last_tweet_ids):
 
 def upload_tweets(tweets, file_path):
     df = pd.DataFrame(tweets)
-    return df.to_csv(file_path)
+    if not os.path.isfile(file_path):
+        return df.to_csv(file_path)
+    else: 
+        return df.to_csv(file_path, mode='a', header=False)
 
 
 def main():
