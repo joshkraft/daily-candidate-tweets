@@ -5,7 +5,7 @@ on:
     
 jobs:
   scrape-data-job:
-    name: Fetch Yesterdays Tweets
+    name: Fetch New Tweets
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout Repository.
@@ -42,5 +42,5 @@ jobs:
           git config --global user.name "Josh Kraft"
           git status
           git add .
-          git commit -m "Commit daily tweet data."
+          git commit -m "Commit hourly tweet data."
           git push

@@ -61,6 +61,17 @@ def upload_tweets(tweets, file_path):
         return df.to_csv(file_path, mode='a', header=False)
 
 
+def process_raw_tweet(tweet):
+    processed_tweet = {}
+    processed_tweet['id'] = tweet.id
+    processed_tweet['username'] = tweet.user.screen_name
+    processed_tweet['tweet_text'] = tweet.full_text
+    processed_tweet['retweets'] = tweet.retweet_count
+    processed_tweet['location'] = tweet.user.location
+    processed_tweet['created_at'] = tweet.created_at
+    return processed_tweet
+
+
 def main():
     api = authenticate_with_secrets('/home/runner/secrets/secrets.json')
     usernames = ["realDonaldTrump", "JoeBiden"]
@@ -73,16 +84,11 @@ def main():
         tweets = get_tweets_from_user(api, user, last_tweet_ids)
         if tweets:
             for tweet in tweets:
-                tweet_details = {}
-                tweet_details['id'] = tweet.id
-                tweet_details['username'] = tweet.user.screen_name
-                tweet_details['tweet_text'] = tweet.full_text
-                tweet_details['retweets'] = tweet.retweet_count
-                tweet_details['location'] = tweet.user.location
-                tweet_details['created_at'] = tweet.created_at
-                processed_tweets.append(tweet_details)
+                processed_tweet = process_raw_tweet(tweet)
+                processed_tweets.append(processed_tweet)
             upload_tweets(processed_tweets, file_path)
     update_last_tweet_ids(last_tweet_ids)
+
 
 if __name__ == "__main__":
     main()
