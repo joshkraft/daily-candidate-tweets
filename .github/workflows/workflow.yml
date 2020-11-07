@@ -1,7 +1,8 @@
 name: Fetch New Tweets
 on:
-  schedule:
-    - cron: '0 * * * *'
+  push
+  #schedule:
+  #  - cron: '0 * * * *'
     
 jobs:
   scrape-data-job:
