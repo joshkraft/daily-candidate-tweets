@@ -4,7 +4,7 @@ on:
     - cron: '0 * * * *'
     
 jobs:
-  scrape-data-job:
+  collect-data-job:
     name: Fetch New Tweets
     runs-on: ubuntu-18.04
     steps:
