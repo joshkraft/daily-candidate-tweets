@@ -1,7 +1,5 @@
 name: Fetch New Tweets
-on:
-  schedule:
-    - cron: '0 * * * *'
+
     
 jobs:
   collect-data-job:
